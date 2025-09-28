@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blessed — Portal Creativo</title>
+  <link rel="stylesheet" href="Estilos.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1 class="logo">Blessed</h1>
+        <p class="subtitle">Tu mundo de juegos, avatares y eventos</p>
+      </div>
+
+      <nav class="features">
+        <button class="feat">Explorar</button>
+        <button class="feat">Crear</button>
+        <button class="feat">Tienda</button>
+        <button class="feat">Comunidad</button>
+      </nav>
+
+      <div class="accent">Juvenil • Profesional</div>
+    </aside>
+
+    <main class="main">
+      <section class="card login-card" id="login-area">
+        <div class="card-header">
+          <h2>Iniciar sesión</h2>
+          <small class="hint">Usa la cuenta demo o registra la tuya</small>
+        </div>
+
+        <form id="login-form" class="form">
+          <label class="sr">Usuario</label>
+          <input id="login-username" type="text" placeholder="Usuario" autocomplete="username" required />
+
+          <label class="sr">Contraseña</label>
+          <div class="password-wrap">
+            <input id="login-password" type="password" placeholder="Contraseña" autocomplete="current-password" required />
+            <button type="button" id="toggle-pass" class="icon-btn" aria-label="Mostrar contraseña">👁️</button>
+          </div>
+
+          <!-- Aquí aparecerá la frase de bienvenida o mensaje de error -->
+          <p id="login-message" class="msg"></p>
+
+          <div class="actions">
+            <button type="submit" class="btn primary">Entrar</button>
+            <button type="button" id="demo-btn" class="btn ghost">Usar demo</button>
+          </div>
+        </form>
+
+        <hr />
+
+        <div class="card-sub">
+          <h3>Registro rápido</h3>
+          <form id="register-form" class="form small">
+            <input id="register-username" type="text" placeholder="Nuevo usuario" required />
+            <input id="register-password" type="password" placeholder="Nueva contraseña" required />
+            <button type="submit" class="btn secondary">Registrar</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Script para login, registro y demo -->
+  <script>
+    const DEMO_USER = { username: "Jeancarlo", password: "12345" };
+
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const loginMessage = document.getElementById('login-message');
+    const demoBtn = document.getElementById('demo-btn');
+    const togglePass = document.getElementById('toggle-pass');
+
+    togglePass.addEventListener('click', () => {
+      const pw = document.getElementById('login-password');
+      pw.type = pw.type === 'password' ? 'text' : 'password';
+    });
+
+    demoBtn.addEventListener('click', () => {
+      document.getElementById('login-username').value = DEMO_USER.username;
+      document.getElementById('login-password').value = DEMO_USER.password;
+      loginMessage.textContent = 'Credenciales demo cargadas.';
+    });
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+
+      const registeredUsers = JSON.parse(localStorage.getItem('blessed_registered_users') || '[]');
+
+      const valid = (username === DEMO_USER.username && password === DEMO_USER.password) ||
+                    registeredUsers.some(u => u.username === username && u.password === password);
+
+      if (valid) {
+        localStorage.setItem('blessed_user', JSON.stringify({ username }));
+        if (username === DEMO_USER.username) {
+          loginMessage.textContent = 'Bienvenido Patrón Jean Carlo';
+        } else {
+          loginMessage.textContent = `Bienvenido, ${username}`;
+        }
+      } else {
+        loginMessage.textContent = 'Usuario o contraseña incorrectos.';
+      }
+    });
+
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = document.getElementById('register-username').value.trim();
+      const password = document.getElementById('register-password').value;
+
+      if (!username || !password) {
+        loginMessage.textContent = 'Rellena usuario y contraseña.';
+        return;
+      }
+
+      let registeredUsers = JSON.parse(localStorage.getItem('blessed_registered_users') || '[]');
+      if (registeredUsers.some(u => u.username === username)) {
+        loginMessage.textContent = 'Usuario ya registrado.';
+        return;
+      }
+
+      registeredUsers.push({ username, password });
+      localStorage.setItem('blessed_registered_users', JSON.stringify(registeredUsers));
+
+      loginMessage.textContent = 'Usuario registrado. Inicia sesión ahora.';
+      registerForm.reset();
+    });
+
+    // Mantener sesión recordada
+    const saved = localStorage.getItem('blessed_user');
+    if (saved) {
+      const username = JSON.parse(saved).username;
+      if (username === DEMO_USER.username) {
+        loginMessage.textContent = 'Bienvenido Patrón Jean Carlo';
+      } else {
+        loginMessage.textContent = `Bienvenido, ${username}`;
+      }
+    }
+  </script>
+</body>
+</html>

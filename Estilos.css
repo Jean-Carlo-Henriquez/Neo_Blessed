@@ -1,0 +1,189 @@
+:root {
+  --orange: #ff7a00;
+  --blue: #0066ff;
+  --bg1: rgba(255, 255, 255, 0.9);
+  --muted: #667085;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background: url('https://img-c.udemycdn.com/course/750x422/5380132_3dad.jpg') no-repeat center center fixed;
+  background-size: cover;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+  max-width: 1100px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  padding: 20px;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, var(--orange), var(--blue));
+  color: white;
+  border-radius: 14px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.brand .logo {
+  font-size: 32px;
+  font-weight: 800;
+  color: red; /* nombre Blessed en rojo */
+  margin-bottom: 6px;
+}
+
+.brand .subtitle {
+  opacity: 0.95;
+  margin-bottom: 18px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feat {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.feat:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.accent {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  background: var(--bg1);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.06);
+}
+
+.login-card {
+  margin-bottom: 18px;
+}
+
+.card-header h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form.small {
+  gap: 8px;
+}
+
+input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e6e9ef;
+  font-size: 15px;
+}
+
+.password-wrap {
+  position: relative;
+}
+
+.icon-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(90deg, var(--orange), var(--blue));
+  color: white;
+}
+
+.btn.secondary {
+  background: #f3f4f6;
+  color: #0f172a;
+}
+
+.btn.ghost {
+  background: transparent;
+  border: 1px dashed #cbd5e1;
+  color: var(--muted);
+}
+
+.msg {
+  font-size: 14px;
+  margin-top: 6px;
+  font-weight: 600;
+  color: var(--blue);
+}
+
+.card-sub h3 {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Ocultar etiquetas sr */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
